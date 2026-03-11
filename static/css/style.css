@@ -1,0 +1,118 @@
+.back{
+background-image:
+linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+url("../imag/Fondo.jpeg");
+background-size: cover;
+background-position: center;
+background-attachment: fixed;
+}
+.color-negro-bg{
+background:#030301 !important;
+}
+
+.hero-section{
+min-height:90vh;
+}
+.info-card{
+width:22rem;
+background:rgba(255,255,255,0.95);
+border-radius:18px;
+overflow:hidden;
+}
+
+.info-header{
+background:#030301;
+color:white;
+padding:20px;
+}
+
+.info-header p{
+margin:0;
+opacity:.7;
+}
+
+.info-body{
+padding:25px;
+}
+
+.info-item{
+display:flex;
+align-items:center;
+gap:12px;
+margin-bottom:15px;
+font-size:1rem;
+}
+
+.info-item i{
+color:#c47a2c;
+font-size:1.2rem;
+}
+.btn-warning{
+background:#c47a2c;
+border:none;
+}
+
+.btn-warning:hover{
+background:#a8621f;
+}
+.about-section{
+background:rgba(0,0,0,0.85);
+}
+
+.about-section p{
+line-height:1.8;
+color:#e6e6e6;
+}
+.carousel-item img{
+height:450px;
+object-fit:cover;
+}
+header a{
+transition:.3s;
+}
+
+header a:hover{
+transform:scale(1.2);
+color:#c47a2c !important;
+}
+.registro-section{
+    min-height: 100vh;
+    padding-top: 120px; 
+}
+.registro-card{
+    border-radius: 18px;
+    background: rgba(3, 3, 1, 0.95); 
+    color: #f5f8de;
+    border: 1px solid rgba(196,122,44,0.3);
+}
+.registro-card h3{
+    color: #ffffff;
+}
+.registro-card .form-label{
+    color: #e6e6e6;
+}
+.registro-card .form-control{
+    background: #111;
+    border: 1px solid #333;
+    color: white;
+    border-radius: 10px;
+}
+.form-control::placeholder{
+    color: #999;
+}
+.form-control:focus{
+    background: #111;
+    color: white;
+    border-color: #c47a2c;
+    box-shadow: 0 0 0 .2rem rgba(196,122,44,.25);
+}
+.form-check-label{
+    color: #ccc;
+}
+.btn-warning{
+    background: #c47a2c;
+    border: none;
+}
+.btn-warning:hover{
+    background: #a8621f;
+}

@@ -1,7 +1,7 @@
 .back{
 background-image:
 linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
-url("../imag/Fondo.jpeg");
+url('../img/Fondo.jpeg');
 background-size: cover;
 background-position: center;
 background-attachment: fixed;
@@ -70,49 +70,41 @@ object-fit:cover;
 header a{
 transition:.3s;
 }
+/*Aqui va estilos de la pagina de Productos*/
+.color-negro-bg{
+background:#111;
+}
 
-header a:hover{
-transform:scale(1.2);
-color:#c47a2c !important;
+.logo{
+font-weight:bold;
+font-size:24px;
 }
-.registro-section{
-    min-height: 100vh;
-    padding-top: 120px; 
+
+.titulo-productos{
+color:#c59d5f;
+font-weight:bold;
 }
-.registro-card{
-    border-radius: 18px;
-    background: rgba(3, 3, 1, 0.95); 
-    color: #f5f8de;
-    border: 1px solid rgba(196,122,44,0.3);
+
+.card{
+height:100%;
+border-radius:10px;
+transition:0.3s;
 }
-.registro-card h3{
-    color: #ffffff;
+
+.card:hover{
+transform:scale(1.05);
 }
-.registro-card .form-label{
-    color: #e6e6e6;
+
+.card-body{
+display:flex;
+flex-direction:column;
+justify-content:space-between;
 }
-.registro-card .form-control{
-    background: #111;
-    border: 1px solid #333;
-    color: white;
-    border-radius: 10px;
+
+.card-img-top{
+height:200px;
+object-fit:contain;
+padding:15px;
+background:white;
 }
-.form-control::placeholder{
-    color: #999;
-}
-.form-control:focus{
-    background: #111;
-    color: white;
-    border-color: #c47a2c;
-    box-shadow: 0 0 0 .2rem rgba(196,122,44,.25);
-}
-.form-check-label{
-    color: #ccc;
-}
-.btn-warning{
-    background: #c47a2c;
-    border: none;
-}
-.btn-warning:hover{
-    background: #a8621f;
-}
+

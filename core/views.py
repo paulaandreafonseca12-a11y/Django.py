@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
 def inicio(request):
-    nombre = "Paula"
+    nombre = "Santiago"
     context = {
         'nombre': nombre
     }

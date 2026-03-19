@@ -1,4 +1,4 @@
-{% load static %}
+{%load static %}
 <header class="p-3 color-negro-bg">
             <div class="container">
                 <div
@@ -8,12 +8,17 @@
                         <svg class="bi me-2" width="40" height="32" role="img"
                             aria-label="Bootstrap"><use
                                 xlink:href="#bootstrap"></use></svg> </a>
-                   <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-
-                <li class="nav-item">
-                    <a class="nav-link" href="/">Inicio</a>
-                </li>
-
+                    <ul
+                        class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                        <li><a href="#"
+                                class="nav-link px-2 text-secondary">Inicio</a></li>
+                        <li><a href="#"
+                                class="nav-link px-2 text-white">Servicios</a></li>
+                        <li><a href="{% url 'reservas' %}" class="nav-link px-2 text-white">Reservas</a></li>
+                        <li><a href="#"
+                                class="nav-link px-2 text-white">Calificación</a></li>
+                        
+                
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'servicios' %}">Servicios</a>
                 </li>
@@ -33,6 +38,9 @@
                             class="form-control form-control-dark text-bg-dark"
                             placeholder="Search..." aria-label="Search">
                     </form> <div class="text-end"> <button type="button"
+                            class="btn btn-outline-light me-2">Login</button>
+                        <button type="button"
+                            class="btn btn-warning">Sign-up</button> </div>
                             class="btn btn-outline-light me-2">Registrarse</button>
                         <button type="button"
                             class="btn btn-warning">iniciar sesion</button> </div>

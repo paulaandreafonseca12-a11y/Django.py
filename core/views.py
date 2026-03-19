@@ -8,7 +8,7 @@ import servicios
 from servicios.forms import serviciosEditarForm, serviciosForm
 
 def inicio(request):
-    nombre = "Paula"
+    nombre = "Santiago"
     context = {
         'nombre': nombre
     }

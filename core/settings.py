@@ -33,6 +33,7 @@ INSTALLED_APPS = [
         'crispy_forms', # pip install django-crispy-forms
     'crispy_bootstrap5', # pip install crispy-bootstrap5
     'servicios',
+    'usuarios',
 
     
 ]

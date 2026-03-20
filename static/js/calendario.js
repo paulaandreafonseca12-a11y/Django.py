@@ -1,131 +1,209 @@
-/* ─── Constantes ─── */
-    const DAYS   = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
-    const MONTHS = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
-    const SLOTS  = [
-      '09:00','09:30','10:00','10:30','11:00','11:30',
-      '12:00','12:30','13:00','14:00','14:30','15:00',
-      '15:30','16:00','16:30','17:00','17:30','18:00'
-    ];
+// ─── DATA ────────────────────────────────────────────────────────────────────
+const TODAY = new Date();
+const DAYS_OF_WEEK = ['DOMINGO','LUNES','MARTES','MIÉRCOLES','JUEVES','VIERNES','SÁBADO'];
+const MONTHS = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
 
-    /* Genera clave de fecha con offset de días */
-    const dk = n => { const d = new Date(); d.setDate(d.getDate() + n); return d.toISOString().slice(0, 10); };
+// Construye los próximos 3 días desde hoy
+const days = [];
+for (let i = 0; i < 3; i++) {
+  const d = new Date(TODAY);
+  d.setDate(TODAY.getDate() + i);
+  days.push({
+    label:  DAYS_OF_WEEK[d.getDay()],
+    number: d.getDate(),
+    month:  MONTHS[d.getMonth()],
+    closed: d.getDay() === 0,   // domingo = cerrado
+    date:   d
+  });
+}
 
-    /* Slots ya ocupados por día (reemplazar con API real) */
-    const TAKEN = {
-      [dk(0)]: ['09:00','10:00','14:00','15:30'],
-      [dk(1)]: ['11:00','12:00','16:00'],
-      [dk(2)]: ['09:30','13:00','17:00','18:00'],
-    };
+// Horarios disponibles por día (índice 0 = hoy, 1 = mañana, 2 = pasado)
+const SLOT_SETS = [
+  ['09:00','09:45','10:30','11:15','12:00','14:00','14:45','15:30','16:15','17:00','17:45','18:30'],
+  ['09:00','09:45','10:30','11:15','12:00','14:00','14:45','15:30','16:15','17:00','17:45','18:30'],
+  ['09:00','09:45','10:30','12:00','14:00','15:30','17:00','17:45','18:30'],
+];
 
-    const now    = new Date();
-    const todayK = dk(0);
-    const nowM   = now.getHours() * 60 + now.getMinutes();
+// Horarios no disponibles (ocupados) por día
+const UNAVAIL = [
+  ['11:15','16:15'],
+  ['11:15','16:15'],
+  [],
+];
 
-    /* ─── Estado ─── */
-    let sel = { day: null, slot: null };
+// ─── STATE ───────────────────────────────────────────────────────────────────
+let state = { step: 1, dayIndex: null, time: null, payment: 'persona' };
 
-    /* ─── Helpers Bootstrap Tab ─── */
-    const goTab = id => bootstrap.Tab.getOrCreateInstance(document.getElementById(id)).show();
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+function init() {
+  const grid = document.getElementById('day-grid');
+  grid.innerHTML = '';
 
-    /* Actualiza círculos del indicador de pasos */
-    function markSteps(active) {
-      [1, 2, 3].forEach(n => {
-        const lnk = document.getElementById(`tab${n}`);
-        const cir = document.getElementById(`c${n}`);
-        lnk.classList.remove('active', 'done');
-        if      (n === active) { lnk.classList.add('active'); cir.textContent = n; }
-        else if (n <  active)  { lnk.classList.add('done');   cir.textContent = '✓'; }
-        else                   { cir.textContent = n; }
-      });
+  days.forEach((d, i) => {
+    const col = document.createElement('div');
+    col.className = 'col-4';
+    col.innerHTML = `
+      <div class="day-card${d.closed ? ' disabled' : ''}" onclick="selectDay(${i}, this)">
+        <div class="day-name">${d.label}</div>
+        <div class="day-number">${d.number}</div>
+        <div class="day-month">${d.month}</div>
+        ${d.closed ? '<div class="badge-closed">CERRADO</div>' : ''}
+      </div>`;
+    grid.appendChild(col);
+  });
+}
+
+// ─── SELECCIONAR DÍA ─────────────────────────────────────────────────────────
+function selectDay(i, el) {
+  if (days[i].closed) return;
+  document.querySelectorAll('.day-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  state.dayIndex = i;
+  state.time = null;
+  renderSlots(i);
+}
+
+function renderSlots(i) {
+  const slots   = SLOT_SETS[i];
+  const unavail = UNAVAIL[i];
+  const grid = document.getElementById('time-grid');
+  const ph   = document.getElementById('time-placeholder');
+
+  grid.innerHTML = '';
+  slots.forEach(t => {
+    const isUnavail = unavail.includes(t);
+    const col = document.createElement('div');
+    col.className = 'col-3';
+    col.innerHTML = `
+      <div class="time-slot${isUnavail ? ' unavailable' : ''}" onclick="selectTime('${t}', this)">
+        ${t}
+      </div>`;
+    grid.appendChild(col);
+  });
+
+  ph.classList.add('d-none');
+  grid.classList.remove('d-none');
+}
+
+// ─── SELECCIONAR HORA ─────────────────────────────────────────────────────────
+function selectTime(t, el) {
+  if (el.classList.contains('unavailable')) return;
+  document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
+  el.classList.add('selected');
+  state.time = t;
+}
+
+// ─── MÉTODO DE PAGO ───────────────────────────────────────────────────────────
+function selectPayment(el) {
+  document.querySelectorAll('.payment-option').forEach(p => p.classList.remove('selected'));
+  el.classList.add('selected');
+  state.payment = el.dataset.pay;
+}
+
+// ─── NAVEGACIÓN ENTRE PASOS ───────────────────────────────────────────────────
+function goStep(n) {
+  document.querySelectorAll('.step-panel').forEach(p => p.classList.add('d-none'));
+  const panel = document.getElementById('panel-' + n);
+  if (panel) {
+    panel.classList.remove('d-none');
+    panel.classList.add('step-panel');
+  }
+  state.step = n;
+  updateStepper(n);
+}
+
+function updateStepper(current) {
+  [1, 2, 3].forEach(i => {
+    const item   = document.getElementById('step-indicator-' + i);
+    const circle = document.getElementById('circle-' + i);
+    item.classList.remove('active', 'done');
+
+    if (i < current) {
+      item.classList.add('done');
+      circle.innerHTML = '<i class="bi bi-check-lg"></i>';
+    } else if (i === current) {
+      item.classList.add('active');
+      circle.textContent = i;
+    } else {
+      circle.textContent = i;
     }
+  });
+}
 
-    /* ─── Paso 1: construir calendario ─── */
-    for (let i = 0; i < 3; i++) {
-      const d = new Date(); d.setDate(d.getDate() + i);
-      const key = d.toISOString().slice(0, 10);
-      const sun = d.getDay() === 0;
+// ─── PASO 1 → PASO 2 ─────────────────────────────────────────────────────────
+document.getElementById('btn-step1').addEventListener('click', () => {
+  if (state.dayIndex === null) { alert('Por favor selecciona un día.'); return; }
+  if (!state.time)             { alert('Por favor selecciona un horario.'); return; }
+  goStep(2);
+});
 
-      const card = Object.assign(document.createElement('div'), {
-        className: 'day-card' + (sun ? ' disabled' : '')
-      });
-      card.innerHTML = `
-        <div class="day-name">${DAYS[d.getDay()]}</div>
-        <div class="day-num">${String(d.getDate()).padStart(2, '0')}</div>
-        <div class="day-month">${MONTHS[d.getMonth()]}</div>
-        ${sun ? '<small style="font-size:.56rem;color:#444">CERRADO</small>' : ''}
-      `;
-      card.dataset.label = `${DAYS[d.getDay()]} ${d.getDate()} de ${MONTHS[d.getMonth()]}`;
-      if (!sun) card.onclick = () => pickDay(card, key, card.dataset.label);
-      document.getElementById('dayGrid').appendChild(card);
-    }
+// ─── PASO 2 → PASO 3 ─────────────────────────────────────────────────────────
+document.getElementById('btn-step2').addEventListener('click', () => {
+  const nombre   = document.getElementById('inp-nombre').value.trim();
+  const apellido = document.getElementById('inp-apellido').value.trim();
+  const email    = document.getElementById('inp-email').value.trim();
+  const tel      = document.getElementById('inp-tel').value.trim();
 
-    function pickDay(el, key, label) {
-      document.querySelectorAll('.day-card').forEach(c => c.classList.remove('active'));
-      el.classList.add('active');
-      sel = { day: { key, label }, slot: null };
-      document.getElementById('btnTo2').disabled = true;
+  if (!nombre || !apellido || !email || !tel) {
+    alert('Por favor completa todos los campos.');
+    return;
+  }
 
-      const taken = TAKEN[key] || [];
-      const box   = document.getElementById('slotsBox');
-      const grid  = Object.assign(document.createElement('div'), { className: 'slots-grid' });
-      let avail   = 0;
+  const d = days[state.dayIndex];
+  document.getElementById('confirm-dia').textContent    = `${d.label.charAt(0) + d.label.slice(1).toLowerCase()} ${d.number} de ${d.month}`;
+  document.getElementById('confirm-hora').textContent   = state.time;
+  document.getElementById('confirm-nombre').textContent = `${nombre} ${apellido}`;
+  document.getElementById('confirm-correo').textContent = email;
+  document.getElementById('confirm-cel').textContent    = tel;
+  document.getElementById('confirm-pago').textContent   = state.payment === 'electronico' ? 'Pago Electrónico' : 'Pago en Persona';
 
-      SLOTS.forEach(t => {
-        const [h, m] = t.split(':').map(Number), sm = h * 60 + m;
-        const off    = (key === todayK && sm <= nowM + 30) || taken.includes(t);
-        if (!off) avail++;
-        const s = Object.assign(document.createElement('div'), {
-          className: 'slot' + (off ? ' taken' : '')
-        });
-        s.innerHTML = `${t}<span class="slot-dot"></span>`;
-        if (!off) s.onclick = () => pickSlot(s, t);
-        grid.appendChild(s);
-      });
+  goStep(3);
+});
 
-      box.innerHTML = '';
-      if (avail) box.appendChild(grid);
-      else box.innerHTML = '<div class="no-slots">Sin horarios disponibles 😔</div>';
-    }
+// ─── CONFIRMAR RESERVA ────────────────────────────────────────────────────────
+function reservar() {
+  document.querySelectorAll('.step-panel').forEach(p => p.classList.add('d-none'));
+  const successPanel = document.getElementById('panel-success');
+  successPanel.classList.remove('d-none');
+  document.getElementById('stepper').classList.add('d-none');
 
-    function pickSlot(el, t) {
-      document.querySelectorAll('.slot').forEach(s => s.classList.remove('active'));
-      el.classList.add('active');
-      sel.slot = t;
-      document.getElementById('btnTo2').disabled = false;
-    }
+  // Mensaje de cancelación dinámico
+  const d = days[state.dayIndex];
+  const msgEl = document.getElementById('cancel-msg');
+  if (msgEl) {
+    msgEl.innerHTML = `
+      Te esperamos en Chicha Barber.<br>
+      Recibirás un recordatorio al correo registrado.<br><br>
+      <span style="color:#aaa; font-size:.82rem;">
+        Recuerda que si quieres cancelar la cita, puedes comunicarte directamente al
+        <a href="https://wa.me/573206542668" target="_blank"
+            style="color:var(--cyan); text-decoration:none; font-weight:600;">
+          WhatsApp 320 6542668
+        </a>,
+        con un plazo mínimo de 3 horas antes de la cita.
+      </span>`;
+  }
+}
 
-    /* ─── Navegación ─── */
-    document.getElementById('btnTo2').onclick = () => { goTab('tab2'); markSteps(2); };
-    document.getElementById('bk1').onclick    = () => { goTab('tab1'); markSteps(1); };
+// ─── REINICIAR ────────────────────────────────────────────────────────────────
+function restart() {
+  state = { step: 1, dayIndex: null, time: null, payment: 'persona' };
 
-    document.getElementById('btnTo3').onclick = () => {
-      // Llenar resumen con los datos del formulario
-      document.getElementById('rDia').textContent    = sel.day.label;
-      document.getElementById('rHora').textContent   = sel.slot;
-      document.getElementById('rNombre').textContent = `${document.getElementById('fN').value.trim()} ${document.getElementById('fA').value.trim()}`;
-      document.getElementById('rEmail').textContent  = document.getElementById('fE').value.trim();
-      document.getElementById('rTel').textContent    = document.getElementById('fT').value.trim();
-      document.getElementById('rPago').textContent   = document.querySelector('input[name="pago"]:checked').value;
-      goTab('tab3'); markSteps(3);
-    };
+  document.getElementById('inp-nombre').value   = '';
+  document.getElementById('inp-apellido').value = '';
+  document.getElementById('inp-email').value    = '';
+  document.getElementById('inp-tel').value      = '';
 
-    document.getElementById('bk2').onclick = () => { goTab('tab2'); markSteps(2); };
+  document.querySelectorAll('.payment-option').forEach(p => p.classList.remove('selected'));
+  document.querySelector('[data-pay="persona"]').classList.add('selected');
 
-    /* ─── Validación en vivo (Paso 2) ─── */
-    ['fN', 'fA', 'fE', 'fT'].forEach(id =>
-      document.getElementById(id).addEventListener('input', () => {
-        const ok = document.getElementById('fN').value.trim()
-                && document.getElementById('fA').value.trim()
-                && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(document.getElementById('fE').value)
-                && document.getElementById('fT').value.trim().length >= 7;
-        document.getElementById('btnTo3').disabled = !ok;
-      })
-    );
+  document.getElementById('time-grid').classList.add('d-none');
+  document.getElementById('time-placeholder').classList.remove('d-none');
+  document.getElementById('stepper').classList.remove('d-none');
 
-    /* ─── Confirmar cita ─── */
-    document.getElementById('btnOk').onclick = () => {
-      const t = document.getElementById('toast');
-      t.textContent = `✅ ¡Cita reservada! ${sel.day.label} · ${sel.slot}`;
-      t.classList.add('show');
-      setTimeout(() => { t.classList.remove('show'); location.reload(); }, 3500);
-    };
+  init();
+  goStep(1);
+}
+
+// ─── ARRANQUE ─────────────────────────────────────────────────────────────────
+init();

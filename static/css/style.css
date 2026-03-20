@@ -117,444 +117,190 @@ color:#c47a2c !important;
     background: #a8621f;
 }
 
-
-
-
-
-/* Estilos para la sección de reservas */
-/* ══════════════════════════════════════
-   CHICHA BARBER — Wizard Styles
-   Requiere: Bootstrap 5.3.2
-   Fuentes:  Bebas Neue, DM Sans (Google Fonts)
-══════════════════════════════════════ */
-
-/* ── Variables ── */
+/* ---------- Estilos de RESERVAS ---------- */
 :root {
-  --bg:           #0e0f11;
-  --card:         rgba(18, 20, 23, 0.93);
-  --border:       rgba(255, 255, 255, 0.07);
-  --accent:       #29c5f6;
-  --glow:         rgba(41, 197, 246, 0.22);
-  --text:         #eef0f3;
-  --muted:        #6b7280;
-  --input-bg:     rgba(255, 255, 255, 0.05);
-  --input-border: rgba(255, 255, 255, 0.1);
-  --slot-bg:      rgba(41, 197, 246, 0.07);
-  --slot-hover:   rgba(41, 197, 246, 0.16);
+  --cyan: #00d4f0;
+  --cyan-dim: #0aa8bf;
+  --bg-dark: #0d0f13;
+  --card-bg: rgba(20,24,32,0.97);
+  --card-border: rgba(255,255,255,0.07);
+  --surface: rgba(255,255,255,0.05);
+  --surface-hover: rgba(0,212,240,0.12);
+  --text-muted-custom: #6b7280;
 }
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*, *::before, *::after { box-sizing: border-box; }
 
-/* ── Body ── */
 body {
   font-family: 'DM Sans', sans-serif;
-  background: var(--bg);
+  background: var(--bg-dark);
   min-height: 100vh;
   overflow-x: hidden;
 }
 
-/* Fondo borroso de barbería */
-body::before {
-  position: fixed; inset: 0;
-
-  filter: blur(10px) brightness(0.22) saturate(0.7);
+/* ---------- background photo ---------- */
+.bg-photo {
+  position: fixed; inset: 0; z-index: 0;
+  background: url('../img/Fondo.png') center/cover no-repeat;
+  filter: brightness(0.25) saturate(0.6);
 }
 
-/* ── Navbar ── */
-nav {
-  position: relative; z-index: 20;
-  background: rgba(0, 0, 0, 0.75);
-  -webkit-backdrop-filter: blur(14px);
-  backdrop-filter: blur(14px);
-  border-bottom: 1px solid var(--border);
-  padding: 13px 32px;
-  display: flex; align-items: center; justify-content: space-between;
+/* ---------- navbar ---------- */
+.navbar-brand span { font-family: 'Bebas Neue', sans-serif; letter-spacing: 4px; font-size: 1.5rem; }
+.navbar-brand span.accent { color: var(--cyan); }
+.navbar { background: rgba(13,15,19,0.85) !important; backdrop-filter: blur(12px); border-bottom: 1px solid var(--card-border); }
+.nav-reserve { color: var(--cyan) !important; font-size: .75rem; letter-spacing: 3px; font-weight: 500; }
+.navbar{
+    margin-top: 0px; /* Ajusta este valor a la altura de tu barra principal */
+    position: relative; 
+    z-index: 99; /* Un poco menos que la principal para que no se solapen */
 }
 
-.nav-brand {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 1.45rem;
-  letter-spacing: 0.14em;
-}
-
-.nav-brand span { color: var(--accent); }
-
-.nav-tag {
-  font-size: 0.7rem;
-  color: var(--muted);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
-
-/* ── Page wrapper ── */
-.page {
-  position: relative; z-index: 5;
-  display: flex; justify-content: center;
-  padding: 44px 16px 72px;
-}
-
-/* ── Wizard card ── */
-.wizard-card {
-  background: var(--card);
-  -webkit-backdrop-filter: blur(22px);
-  backdrop-filter: blur(22px);
-  border: 1px solid var(--border);
+/* ---------- booking card ---------- */
+.booking-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
   border-radius: 20px;
-  padding: 38px 36px 34px;
-  width: 100%; max-width: 700px;
-  box-shadow: 0 40px 90px rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 30px 80px rgba(0,0,0,.7);
+  max-width: 780px;
+  width: 100%;
 }
 
-/* ══════════════════════════════════════
-   INDICADOR DE PASOS (Bootstrap Tabs)
-══════════════════════════════════════ */
-.nav-tabs {
-  border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 36px;
-  position: relative;
-}
-
-/* Línea conectora entre pasos */
-.nav-tabs::before {
-  content: '';
-  position: absolute;
-  top: 18px; left: 20%; right: 20%;
-  height: 1px;
-  background: var(--border);
-  z-index: 0;
-}
-
-.nav-tabs .nav-item {
-  flex: 1;
-  display: flex; flex-direction: column; align-items: center;
-  position: relative; z-index: 1;
-}
-
-.nav-tabs .nav-link {
-  background: none !important;
-  border: none !important;
-  padding: 0;
-  display: flex; flex-direction: column; align-items: center; gap: 7px;
-  pointer-events: none; /* navegación controlada solo por botones */
-}
-
-/* Círculo numerado */
+/* ---------- stepper ---------- */
+.stepper { position: relative; display: flex; align-items: center; justify-content: center; gap: 0; }
+.step-item { display: flex; flex-direction: column; align-items: center; gap: 6px; position: relative; z-index: 1; }
 .step-circle {
-  width: 36px; height: 36px;
-  border-radius: 50%;
-  border: 1.5px solid var(--border);
-  background: var(--input-bg);
+  width: 40px; height: 40px; border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
-  font-size: 0.78rem; font-weight: 600;
-  color: var(--muted);
-  transition: all 0.3s;
+  font-weight: 700; font-size: .85rem; border: 2px solid var(--text-muted-custom);
+  color: var(--text-muted-custom); background: transparent;
+  transition: all .3s;
+}
+.step-item.active .step-circle { border-color: var(--cyan); color: var(--cyan); }
+.step-item.done .step-circle  { border-color: var(--cyan); background: var(--cyan); color: #000; }
+.step-label { font-size: .65rem; letter-spacing: 2px; color: var(--text-muted-custom); }
+.step-item.active .step-label,
+.step-item.done .step-label { color: var(--cyan); }
+.step-line { flex: 1; height: 1px; background: var(--card-border); max-width: 120px; }
+
+/* ---------- day cards ---------- */
+.day-card {
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 18px 12px;
+  cursor: pointer;
+  transition: all .2s;
+  text-align: center;
+  background: var(--surface);
+  user-select: none;
+}
+.day-card:hover:not(.disabled) { border-color: var(--cyan); background: var(--surface-hover); }
+.day-card.selected { border-color: var(--cyan); background: var(--surface-hover); }
+.day-card .day-name { font-size: .65rem; letter-spacing: 2px; color: var(--text-muted-custom); }
+.day-card.selected .day-name { color: var(--cyan); }
+.day-card .day-number { font-family: 'Bebas Neue', sans-serif; font-size: 2.8rem; line-height: 1; color: #fff; }
+.day-card.selected .day-number { color: var(--cyan); }
+.day-card .day-month { font-size: .75rem; color: #aaa; }
+.day-card.disabled { opacity: .4; cursor: not-allowed; }
+.day-card .badge-closed {
+  font-size: .6rem; letter-spacing: 1px; background: rgba(255,255,255,0.08);
+  color: #888; border-radius: 4px; padding: 2px 6px; margin-top: 4px; display: inline-block;
 }
 
-/* Etiqueta del paso */
-.step-lbl {
-  font-size: 0.6rem; font-weight: 600;
-  letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--muted);
-  transition: color 0.3s;
+/* ---------- time slots ---------- */
+.time-slot {
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  padding: 12px 6px;
+  cursor: pointer;
+  text-align: center;
+  background: var(--surface);
+  font-size: .9rem;
+  font-weight: 500;
+  color: #ddd;
+  transition: all .2s;
+  position: relative;
+  user-select: none;
+}
+.time-slot::after { content: '•'; display: block; color: var(--cyan); font-size: .5rem; margin-top: 2px; }
+.time-slot:hover:not(.unavailable) { border-color: var(--cyan); background: var(--surface-hover); }
+.time-slot.selected { background: var(--cyan); border-color: var(--cyan); color: #000; font-weight: 700; }
+.time-slot.selected::after { color: #000; }
+.time-slot.unavailable { opacity: .35; cursor: not-allowed; text-decoration: line-through; }
+
+/* ---------- section label ---------- */
+.section-label { font-size: .7rem; letter-spacing: 2.5px; color: var(--cyan); font-weight: 600; }
+
+/* ---------- inputs ---------- */
+.form-control-dark {
+  background: var(--surface) !important;
+  border: 1px solid var(--card-border) !important;
+  color: #fff !important;
+  border-radius: 10px;
+}
+.form-control-dark:focus {
+  border-color: var(--cyan) !important;
+  box-shadow: 0 0 0 3px rgba(0,212,240,.15) !important;
+}
+.form-control-dark::placeholder { color: #555; }
+.form-label { font-size: .8rem; color: #aaa; margin-bottom: 6px; }
+
+/* ---------- payment options ---------- */
+.payment-option {
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 14px 16px;
+  cursor: pointer;
+  transition: all .2s;
+  background: var(--surface);
+}
+.payment-option:hover,
+.payment-option.selected { border-color: var(--cyan); background: var(--surface-hover); }
+.payment-option .pay-title { font-size: .9rem; font-weight: 500; color: #fff; }
+.payment-option .pay-sub   { font-size: .75rem; color: #888; }
+.payment-option .radio-dot {
+  width: 18px; height: 18px; border-radius: 50%;
+  border: 2px solid #555; display: inline-block; margin-right: 12px; flex-shrink: 0;
+  transition: all .2s; position: relative; top: 2px;
+}
+.payment-option.selected .radio-dot {
+  border-color: var(--cyan);
+  background: var(--cyan);
+  box-shadow: 0 0 0 3px rgba(0,212,240,.2);
 }
 
-/* Paso activo */
-.nav-tabs .nav-link.active .step-circle {
-  border-color: var(--accent);
-  background: var(--glow);
-  color: var(--accent);
-  box-shadow: 0 0 16px var(--glow);
+/* ---------- confirmation table ---------- */
+.confirm-table tr { border-bottom: 1px solid var(--card-border); }
+.confirm-table tr:last-child { border-bottom: none; }
+.confirm-table td { padding: 14px 0; }
+.confirm-table .label { font-size: .65rem; letter-spacing: 2px; color: #888; }
+.confirm-table .value { font-size: .9rem; color: #fff; }
+.confirm-table .value.accent { color: var(--cyan); font-weight: 600; }
+
+/* ---------- buttons ---------- */
+.btn-cyan {
+  background: var(--cyan); border: none; color: #000;
+  font-weight: 700; font-size: .8rem; letter-spacing: 2px;
+  border-radius: 10px; padding: 14px;
+  transition: all .2s;
 }
-.nav-tabs .nav-link.active .step-lbl { color: var(--accent); }
-
-/* Paso completado */
-.nav-tabs .nav-link.done .step-circle {
-  border-color: var(--accent);
-  background: var(--accent);
-  color: #000;
+.btn-cyan:hover { background: #fff; color: #000; }
+.btn-back {
+  background: var(--surface); border: 1px solid var(--card-border);
+  color: #aaa; font-size: .8rem; letter-spacing: 1px;
+  border-radius: 10px; padding: 14px 20px;
+  transition: all .2s;
 }
-.nav-tabs .nav-link.done .step-lbl { color: var(--text); }
+.btn-back:hover { border-color: #aaa; color: #fff; }
 
-/* ── Animación entre paneles ── */
-.tab-content > .tab-pane { animation: fadeUp 0.3s ease both; }
+/* ---------- success screen ---------- */
+.success-icon { font-size: 4rem; color: var(--cyan); }
+.success-title { font-family: 'Bebas Neue', sans-serif; font-size: 2.8rem; letter-spacing: 3px; color: #fff; }
 
+/* ---------- fade transition ---------- */
+.step-panel { animation: fadeUp .3s ease both; }
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(12px); }
+  from { opacity: 0; transform: translateY(16px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-
-/* ══════════════════════════════════════
-   TIPOGRAFÍA
-══════════════════════════════════════ */
-.step-title {
-  color: var(--text);
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 2rem; letter-spacing: 0.06em;
-  text-align: center; margin-bottom: 4px;
-}
-
-.step-sub {
-  text-align: center;
-  color: var(--muted);
-  font-size: 0.83rem;
-  margin-bottom: 26px;
-}
-
-.sec-label {
-  font-size: 0.67rem; font-weight: 600;
-  letter-spacing: 0.18em; text-transform: uppercase;
-  color: var(--accent); margin-bottom: 11px;
-}
-
-/* ══════════════════════════════════════
-   PASO 1 — CALENDARIO
-══════════════════════════════════════ */
-
-/* Grid de días */
-.day-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  margin-bottom: 24px;
-}
-
-.day-card {
-  background: var(--input-bg);
-  border: 1px solid var(--border);
-  border-radius: 12px; padding: 14px 10px;
-  text-align: center; cursor: pointer;
-  transition: all 0.2s; -webkit-user-select: none; user-select: none;
-}
-
-.day-card:hover   { border-color: var(--accent); background: var(--slot-hover); }
-.day-card.active  { border-color: var(--accent); background: var(--slot-hover); box-shadow: 0 0 18px var(--glow); }
-.day-card.disabled { opacity: 0.3; cursor: not-allowed; pointer-events: none; }
-
-.day-name  { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
-.day-num   { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; line-height: 1; margin: 2px 0; }
-.day-month { font-size: 0.68rem; color: var(--muted); }
-
-.day-card.active .day-name,
-.day-card.active .day-month { color: var(--accent); }
-
-/* Grid de horarios */
-.slots-grid {
-  color: #ffffff;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 8px;
-  margin-bottom: 24px;
-}
-
-.slot {
-  background: var(--slot-bg);
-  border: 1px solid rgba(41, 197, 246, 0.13);
-  border-radius: 8px; padding: 10px 4px;
-  text-align: center; font-size: 0.8rem; font-weight: 500;
-  cursor: pointer; transition: all 0.18s;
-}
-
-.slot:hover  { background: var(--slot-hover); border-color: var(--accent); }
-.slot.active { background: var(--accent); border-color: var(--accent); color: #000; font-weight: 700; box-shadow: 0 0 14px var(--glow); }
-.slot.taken  { opacity: 0.25; cursor: not-allowed; pointer-events: none; text-decoration: line-through; }
-
-.slot-dot { display: block; width: 4px; height: 4px; border-radius: 50%; background: var(--accent); margin: 4px auto 0; }
-.slot.active .slot-dot { background: #000; }
-.slot.taken  .slot-dot { background: #444; }
-
-.no-slots { text-align: center; color: var(--muted); font-size: 0.83rem; padding: 20px 0; }
-
-/* ══════════════════════════════════════
-   PASO 2 — FORMULARIO
-══════════════════════════════════════ */
-.form-row-2 {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 14px;
-  margin-bottom: 14px;
-}
-
-.fgroup {
-  display: flex; flex-direction: column;
-  gap: 6px; margin-bottom: 14px;
-}
-
-.fgroup label { font-size: 0.78rem; font-weight: 500; }
-
-.finput {
-  background: var(--input-bg);
-  border: 1px solid var(--input-border);
-  border-radius: 9px; padding: 12px 15px;
-  font-family: 'DM Sans', sans-serif; font-size: 0.88rem;
-  color: var(--text); width: 100%; outline: none;
-  transition: border-color 0.2s, box-shadow 0.2s;
-}
-
-.finput::placeholder { color: var(--muted); }
-.finput:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(41, 197, 246, 0.12); }
-
-/* Opciones de pago */
-.pay-options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 6px; }
-
-.pay-opt {
-  display: flex; align-items: center; gap: 12px;
-  background: var(--input-bg); border: 1px solid var(--border);
-  border-radius: 10px; padding: 13px 16px;
-  cursor: pointer; transition: all 0.2s;
-}
-
-.pay-opt:has(input:checked) {
-  border-color: var(--accent);
-  background: var(--slot-hover);
-  box-shadow: 0 0 12px var(--glow);
-}
-
-.pay-opt input[type="radio"] {
-  accent-color: var(--accent);
-  width: 17px; height: 17px;
-  cursor: pointer;
-}
-
-.pay-lbl  { font-size: 0.87rem; font-weight: 500; }
-.pay-desc { font-size: 0.72rem; color: var(--muted); }
-
-/* ══════════════════════════════════════
-   PASO 3 — CONFIRMACIÓN
-══════════════════════════════════════ */
-.confirm-icon {
-  text-align: center; font-size: 3rem; margin-bottom: 10px;
-  animation: pop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
-}
-
-@keyframes pop {
-  from { transform: scale(0.4); opacity: 0; }
-  to   { transform: scale(1);   opacity: 1; }
-}
-
-.confirm-grid {
-  background: rgba(41, 197, 246, 0.05);
-  border: 1px solid rgba(41, 197, 246, 0.15);
-  border-radius: 13px; padding: 20px 22px; margin-bottom: 24px;
-}
-
-.crow {
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 9px 0;
-  border-bottom: 1px solid var(--border);
-  font-size: 0.87rem;
-}
-.crow:last-child { border-bottom: none; }
-.crow .k  { color: var(--muted); font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; }
-.crow .v  { font-weight: 500; text-align: right; }
-.crow .v.hi { color: var(--accent); font-weight: 600; }
-
-/* ══════════════════════════════════════
-   BOTONES DE NAVEGACIÓN
-══════════════════════════════════════ */
-.wiz-nav { display: flex; gap: 12px; margin-top: 8px; }
-
-.btn-back {
-  flex: 0 0 auto; padding: 13px 20px;
-  background: transparent; border: 1px solid var(--border);
-  border-radius: 10px; color: var(--muted);
-  font-family: 'DM Sans', sans-serif; font-size: 0.88rem; font-weight: 500;
-  cursor: pointer; transition: all 0.2s;
-}
-.btn-back:hover { border-color: rgba(255, 255, 255, 0.2); color: var(--text); }
-
-.btn-next {
-  flex: 1; padding: 14px;
-  background: var(--accent); color: #000;
-  border: none; border-radius: 10px;
-  font-family: 'DM Sans', sans-serif; font-weight: 700;
-  font-size: 0.92rem; letter-spacing: 0.06em; text-transform: uppercase;
-  cursor: pointer; transition: all 0.2s;
-  box-shadow: 0 0 26px var(--glow);
-}
-.btn-next:hover    { background: #4dd4f9; box-shadow: 0 0 40px rgba(41, 197, 246, 0.4); transform: translateY(-1px); }
-.btn-next:disabled { background: rgba(41, 197, 246, 0.18); color: var(--muted); cursor: not-allowed; box-shadow: none; transform: none; }
-
-/* ══════════════════════════════════════
-   TOAST
-══════════════════════════════════════ */
-.toast-wrap {
-  position: fixed; bottom: 30px; left: 50%;
-  transform: translateX(-50%); z-index: 999;
-}
-
-.toast-msg {
-  background: rgba(14, 16, 20, 0.96);
-  border: 1px solid var(--accent);
-  border-radius: 10px; padding: 13px 26px;
-  font-size: 0.88rem; color: var(--text);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-  opacity: 0; transform: translateY(12px);
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-  pointer-events: none; white-space: nowrap;
-}
-
-.toast-msg.show { opacity: 1; transform: translateY(0); }
-
-/* ══════════════════════════════════════
-   RESPONSIVE
-══════════════════════════════════════ */
-@media (max-width: 520px) {
-  .wizard-card { padding: 26px 16px; }
-  .slots-grid  { grid-template-columns: repeat(3, 1fr); }
-  .form-row-2  { grid-template-columns: 1fr; }
-}
-
-/* ── Inputs: fondo claro con texto oscuro legible ── */
-.finput {
-  background: rgba(255, 255, 255, 0.08);  /* ligeramente más visible */
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 9px; padding: 12px 15px;
-  font-family: 'DM Sans', sans-serif; font-size: 0.88rem;
-  color: #eef0f3;          /* ← texto blanco claro, siempre visible */
-  width: 100%; outline: none;
-  transition: border-color 0.2s, box-shadow 0.2s;
-  -webkit-text-fill-color: #eef0f3;   /* fix para autofill en Chrome */
-}
-
-.finput::placeholder { color: rgba(255,255,255,0.35); }
-
-.finput:focus {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(41, 197, 246, 0.12);
-  background: rgba(255, 255, 255, 0.11);
-}
-
-/* Fix autofill de Chrome/Safari que pone fondo blanco */
-.finput:-webkit-autofill,
-.finput:-webkit-autofill:hover,
-.finput:-webkit-autofill:focus {
-  -webkit-box-shadow: 0 0 0px 1000px #1a1d22 inset;
-  -webkit-text-fill-color: #eef0f3;
-  transition: background-color 9999s ease-in-out 0s;
-}
-
-/* ── Paso 3 — Confirmar: valores más visibles ── */
-.crow .v {
-  font-weight: 500;
-  color: #d8dce3;     /* ← antes era var(--text) pero se perdía, ahora más brillante */
-  text-align: right;
-}
-
-.crow .v.hi {
-  color: var(--accent);
-  font-weight: 600;
-}
-
-/* ── Labels de los campos ── */
-.fgroup label {
-  font-size: 0.78rem;
-  font-weight: 500;
-  color: #c0c5cf;     /* ← más luminoso que var(--muted) */
-}
-
-/* ── Opciones de pago: texto del label y descripción más visibles ── */
-.pay-lbl  { font-size: 0.87rem; font-weight: 500; color: #eef0f3; }
-.pay-desc { font-size: 0.72rem; color: #8b93a0; }

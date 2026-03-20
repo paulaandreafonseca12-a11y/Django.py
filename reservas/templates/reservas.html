@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    <!-- ── Navbar ── -->
+  <nav>
+    <div class="nav-brand">CHICHA <span>BARBER</span></div>
+    <div class="nav-tag">Reserva en línea</div>
+  </nav>
+
+  <!-- ── Página ── -->
+  <div class="page">
+  <div class="wizard-card">
+
+    <!-- Indicador de pasos (Bootstrap Tabs) -->
+    <ul class="nav nav-tabs" id="wizTabs" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="tab1" data-bs-toggle="tab" data-bs-target="#p1" type="button" role="tab" aria-selected="true" aria-controls="p1">
+          <span class="step-circle" id="c1">1</span>
+          <span class="step-lbl">Fecha</span>
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link " id="tab2" data-bs-toggle="tab" data-bs-target="#p2" type="button" role="tab" aria-selected="false" aria-controls="p2">
+          <span class="step-circle" id="c2">2</span>
+          <span class="step-lbl">Datos</span>
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="tab3" data-bs-toggle="tab" data-bs-target="#p3" type="button" role="tab" aria-selected="false" aria-controls="p3">
+          <span class="step-circle" id="c3">3</span>
+          <span class="step-lbl">Confirmar</span>
+        </button>
+      </li>
+    </ul>
+
+    <!-- Paneles -->
+    <div class="tab-content">
+
+      <!-- PASO 1 · Calendario -->
+      <div class="tab-pane fade show active" id="p1" role="tabpanel"> 
+        <h2 class="step-title">Reserva tu Cita</h2>
+
+        <div class="sec-label">📅 Elige el día</div>
+        <div class="day-grid" id="dayGrid"></div>
+
+        <div class="sec-label">🕐 Horario disponible</div>
+        <div id="slotsBox">
+          <div class="no-slots">Selecciona un día para ver los horarios</div>
+        </div>
+
+        <div class="wiz-nav">
+          <button class="btn-next" id="btnTo2" disabled>Siguiente →</button>
+        </div>
+      </div>
+
+      <!-- PASO 2 · Formulario -->
+      <div class="tab-pane fade" id="p2" role="tabpanel">
+        <h2 class="step-title">Tus Datos</h2>
+        <p class="step-sub">Información de contacto</p>
+
+        <div class="form-row-2">
+          <div class="fgroup">
+            <label for="fN">Nombre</label>
+            <input class="finput" id="fN" type="text" placeholder="Ej. Juan"/>
+          </div>
+          <div class="fgroup">
+            <label for="fA">Apellido</label>
+            <input class="finput" id="fA" type="text" placeholder="Ej. Pérez"/>
+          </div>
+        </div>
+
+        <div class="fgroup">
+          <label for="fE">Correo Electrónico</label>
+          <input class="finput" id="fE" type="email" placeholder="nombre@ejemplo.com"/>
+        </div>
+
+        <div class="fgroup">
+          <label for="fT">Número de Celular</label>
+          <input class="finput" id="fT" type="tel" placeholder="+57 300 000 0000"/>
+        </div>
+
+        <div class="fgroup mb-custom">
+          <label>Método de Pago</label>
+          <div class="pay-options">
+            <label class="pay-opt">
+              <input type="radio" name="pago" value="Pago Electrónico" checked/>
+              <div>
+                <div class="pay-lbl">Pago Electrónico</div>
+                <div class="pay-desc">Nequi, Daviplata, PSE</div>
+              </div>
+            </label>
+            <label class="pay-opt">
+              <input type="radio" name="pago" value="Pago en Persona"/>
+              <div>
+                <div class="pay-lbl">Pago en Persona</div>
+                <div class="pay-desc">Efectivo o tarjeta en el local</div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div class="wiz-nav">
+          <button class="btn-back" id="bk1">← Volver</button>
+          <button class="btn-next" id="btnTo3" disabled>Revisar cita →</button>
+        </div>
+      </div>
+
+      <!-- PASO 3 · Confirmación -->
+      <div class="tab-pane fade" id="p3" role="tabpanel">
+        <div class="confirm-icon">✂️</div>
+        <h2 class="step-title">Confirma tu Cita</h2>
+        <p class="step-sub">Revisa los detalles antes de confirmar</p>
+
+        <div class="confirm-grid">
+          <div class="crow"><span class="k">Día</span>    <span class="v hi" id="rDia">—</span></div>
+          <div class="crow"><span class="k">Hora</span>   <span class="v hi" id="rHora">—</span></div>
+          <div class="crow"><span class="k">Nombre</span> <span class="v"    id="rNombre">—</span></div>
+          <div class="crow"><span class="k">Correo</span> <span class="v"    id="rEmail">—</span></div>
+          <div class="crow"><span class="k">Celular</span><span class="v"    id="rTel">—</span></div>
+          <div class="crow"><span class="k">Pago</span>   <span class="v"    id="rPago">—</span></div>
+        </div>
+
+        <div class="wiz-nav">
+          <button class="btn-back" id="bk2">← Editar</button>
+          <button class="btn-next" id="btnOk">✓ Reservar Cita</button>
+        </div>
+      </div>
+
+    </div><!-- /tab-content -->
+  </div><!-- /wizard-card -->
+  </div><!-- /page -->
+
+  <!-- Toast de confirmación -->
+  <div class="toast-wrap">
+    <div class="toast-msg" id="toast"></div>
+  </div>
+  
+
+{% endblock %}
+
+{% block scripts %}<script src="{% static "js/calendario.js" %}"></script>{% endblock scripts %}

@@ -31,5 +31,5 @@ urlpatterns = [
 
     path('procesar_compra/', views.productos, name='procesar_compra'),
 
-    path('crear-producto/', views.crear_prod, name='crear_producto'),
+    path('crear-producto/', views.crear_producto, name='crear_producto'),
 ]

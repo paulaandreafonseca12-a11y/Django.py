@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Stock(models.Model):
     codigo = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=100)
@@ -28,11 +29,9 @@ class Producto(models.Model):
 
 class Compra(models.Model):
     codigo_compra = models.AutoField(primary_key=True)
-    fecha = models.DateField()
-    total = models.DecimalField(max_digits=10, decimal_places=2)
 
     def __str__(self):
-        return f"Compra {self.codigo_compra}"
+        return f"{self.nombre_cliente} - Compra {self.codigo_compra}"
 
 
 class DetalleCompra(models.Model):
@@ -54,4 +53,23 @@ class DetalleCompra(models.Model):
 
     def __str__(self):
         return f"Detalle {self.codigo_detalle}"
-# Create your models here.
+
+
+class Pago(models.Model):
+    compra = models.ForeignKey('Compra', on_delete=models.CASCADE)
+
+    METODOS_PAGO = [
+        ('persona', 'Pago en persona'),
+        ('contraentrega', 'Pago contraentrega'),
+    ]
+
+    nombre = models.CharField(max_length=100)
+    correo = models.EmailField()
+    telefono = models.CharField(max_length=20)
+    direccion = models.CharField(max_length=255)
+    metodo_pago = models.CharField(max_length=20, choices=METODOS_PAGO)
+
+    fecha = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Pago de {self.nombre}"

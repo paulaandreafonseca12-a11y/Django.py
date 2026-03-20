@@ -27,5 +27,9 @@ from . import views
 urlpatterns = [
     path ('productos/', views.productos, name='productos'),
     path ('productos/carrito/', views.carrito, name='carrito'),
-     path ('productos/pago/', views.carrito, name='pago'),
+    path ('productos/pago/', views.pago, name='pago'),
+
+    path('procesar_compra/', views.productos, name='procesar_compra'),
+
+    path('crear-producto/', views.crear_prod, name='crear_producto'),
 ]

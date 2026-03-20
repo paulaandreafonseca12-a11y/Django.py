@@ -1,11 +1,11 @@
-#servicios 
+/* Estilos generales servicios */ 
 .back{
 background-image:
 linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
-url("../img/Fondo.png");
+url( "../img/Fondo.png" );
 background-size: cover;
-background-position: center;
-background-attachment: fixed;
+background-position:center;
+background-attachment:fixed;
 }
 .color-negro-bg{
 background:#030301 !important;
@@ -48,12 +48,12 @@ font-size:1rem;
 color:#c47a2c;
 font-size:1.2rem;
 }
-.btn-warning{
+.btn-btn-primary{
 background:#c47a2c;
 border:none;
 }
 
-.btn-warning:hover{
+.btn-btn-primary{
 background:#a8621f;
 }
 .about-section{

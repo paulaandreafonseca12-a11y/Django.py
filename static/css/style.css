@@ -2,7 +2,7 @@
 .back{
 background-image:
 linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
-url("../img/Fondo.png");
+url('../img/Fondo.png');
 background-size: cover;
 background-position: center;
 background-attachment: fixed;
@@ -11,7 +11,7 @@ background-attachment: fixed;
 background:#030301 !important;
 }
 
-.hero-section{
+.hero-section{ 
 min-height:90vh;
 }
 .info-card{

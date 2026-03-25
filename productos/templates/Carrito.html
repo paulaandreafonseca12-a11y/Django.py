@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<section class="container mt-5">
+
+    <h2 class="text-center mb-5 titulo-productos">
+        Carrito de Compras
+    </h2>
+
+    <table class="table table-striped text-center">
+
+        <thead class="table-dark">
+            <tr>
+                <th>Producto</th>
+                <th>Precio</th>
+                <th>Cantidad</th>
+                <th>Subtotal</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+
+        <tbody id="tabla-carrito"></tbody>
+
+    </table>
+
+    <div class="text-end">
+
+        <h4 class="total">
+            Total a pagar:
+            <span id="total"></span>
+        </h4>
+
+        <a href="{% url "pago" %}" class="btn btn-success mt-3">
+            Comprar
+        </a>
+
+        <a href="{% url 'productos' %}" class="btn btn-secondary mt-3">
+            Seguir Comprando
+        </a>
+
+    </div>
+
+</section>
+
+<script>
+
+    let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+
+    function mostrarCarrito() {
+
+        let tabla = document.getElementById("tabla-carrito");
+        tabla.innerHTML = "";
+
+        let total = 0;
+
+        carrito.forEach((producto, index) => {
+
+            let subtotal = producto.precio * producto.cantidad;
+            total += subtotal;
+
+            tabla.innerHTML += `
+
+                <tr>
+
+                    <td>${producto.nombre}</td>
+
+                    <td>$${producto.precio}</td>
+
+                    <td>
+
+                        <button class="btn btn-sm btn-dark"
+                            onclick="cambiarCantidad(${index}, -1)">
+                            -
+                        </button>
+
+                        ${producto.cantidad}
+
+                        <button class="btn btn-sm btn-dark"
+                            onclick="cambiarCantidad(${index}, 1)">
+                            +
+                        </button>
+
+                    </td>
+
+                    <td>$${subtotal}</td>
+
+                    <td>
+
+                        <button class="btn btn-danger btn-sm"
+                            onclick="eliminarProducto(${index})">
+                            Eliminar
+                        </button>
+
+                    </td>
+
+                </tr>
+
+            `;
+
+        });
+
+        document.getElementById("total").textContent = "$" + total;
+
+        localStorage.setItem("carrito", JSON.stringify(carrito));
+
+    }
+
+    function cambiarCantidad(index, cambio) {
+
+        carrito[index].cantidad += cambio;
+
+        if (carrito[index].cantidad <= 0) {
+            carrito.splice(index, 1);
+        }
+
+        mostrarCarrito();
+
+    }
+
+    function eliminarProducto(index) {
+
+        carrito.splice(index, 1);
+        mostrarCarrito();
+
+    }
+
+    mostrarCarrito();
+
+</script>
+{% endblock content %}

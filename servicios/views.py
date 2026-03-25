@@ -1,6 +1,6 @@
-from django.shortcuts import render
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib import messages
+from django.shortcuts import render # type: ignore
+from django.shortcuts import render, redirect, get_object_or_404 # type: ignore
+from django.contrib import messages # type: ignore
 from .models import *
 from .forms import serviciosForm, serviciosEditarForm
 
@@ -71,3 +71,9 @@ def servicios_view(request):
     'titulo' : 'Nuestros Servicios'
     }
     return render(request, 'servicios.html', context)
+
+def promocion_views(request):
+    context = {
+    'titulo' : 'Promociones'
+    }
+    return render(request, 'promocion.html', context)

@@ -22,9 +22,14 @@
             </form>
 
             <div class="text-end">
-                <button type="button" class="btn btn-outline-light me-2">Iniciar Sesión</button>
-                <button type="button" class="btn btn-warning">Registrarse</button>
-            </div>
+    <a href="{% url 'login' %}" class="btn btn-outline-light me-2">
+        Iniciar Sesión
+    </a>
+
+    <a href="{% url 'registro' %}" class="btn btn-warning">
+        Registrarse
+    </a>
+</div>
 
         </div>
     </div>

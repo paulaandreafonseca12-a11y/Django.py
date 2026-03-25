@@ -1,4 +1,13 @@
-/* Estilos generales servicios */ 
+/* 1. Quitamos los márgenes que el navegador pone por defecto */
+html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100%;
+    height: 100%;
+}
+
+/* 2. Configuramos el fondo en la clase 'back' que ya tienes en el body */
+
 .back{
 background-image:
 linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
@@ -6,7 +15,20 @@ url( '../img/Fondo.png' );
 background-size: cover;
 background-position:center;
 background-attachment:fixed;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
+
+/* 3. Aseguramos que el contenido principal ocupe el espacio necesario */
+main {
+    flex: 1; /* Esto empuja el footer al fondo si hay poco contenido */
+    display: flex;
+    flex-direction: column;
+}
+
+
 .color-negro-bg{
 background:#030301 !important;
 }

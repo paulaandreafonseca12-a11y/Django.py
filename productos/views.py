@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
-from .models import Compra, ProductoForm
+from .models import Compra, Producto
+from .forms import ProductoForm
 from django.contrib import messages
 def productos(request):
-    return render(request, 'Productos.html' )
+    return render(request, 'Productos.html')
 
 def carrito(request):
     return render(request, 'Carrito.html')
@@ -37,13 +38,13 @@ def procesar_compra(request):
 
     return redirect('Productos.html')
 
-def crear_producto(request):
+def Producto(request):
     if request.method == 'POST':
-        form = ProductoForm(request.POST, request.FILES)
+        form = Producto(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             return redirect('crear_producto')
     else:
-        form = ProductoForm()
+        form = Producto()
 
     return render(request, 'crear_producto.html', {'form': form})

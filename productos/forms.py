@@ -11,7 +11,7 @@ class StockForm(forms.ModelForm):
 class ProductoForm(forms.ModelForm):
     class Meta:
         model = Producto
-        fields = ['nombre', 'descripcion', 'precio_venta', 'precio_compra', 'stock', 'imagen']
+        fields = ['nombre', 'descripcion', 'precio_venta', 'precio_compra', 'stock']
 
 
 class CompraForm(forms.ModelForm):

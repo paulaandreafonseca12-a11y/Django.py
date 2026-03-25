@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Compra, Producto
+from .forms import ProductoForm
 from django.contrib import messages
 def productos(request):
     return render(request, 'Productos.html')

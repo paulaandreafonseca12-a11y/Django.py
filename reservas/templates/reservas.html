@@ -1,134 +1,199 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-    <!-- ── Navbar ── -->
-  <nav>
-    <div class="nav-brand">CHICHA <span>BARBER</span></div>
-    <div class="nav-tag">Reserva en línea</div>
-  </nav>
 
-  <!-- ── Página ── -->
-  <div class="page">
-  <div class="wizard-card">
 
-    <!-- Indicador de pasos (Bootstrap Tabs) -->
-    <ul class="nav nav-tabs" id="wizTabs" role="tablist">
-      <li class="nav-item" role="presentation">
-        <button class="nav-link active" id="tab1" data-bs-toggle="tab" data-bs-target="#p1" type="button" role="tab" aria-selected="true" aria-controls="p1">
-          <span class="step-circle" id="c1">1</span>
-          <span class="step-lbl">Fecha</span>
-        </button>
-      </li>
-      <li class="nav-item" role="presentation">
-        <button class="nav-link " id="tab2" data-bs-toggle="tab" data-bs-target="#p2" type="button" role="tab" aria-selected="false" aria-controls="p2">
-          <span class="step-circle" id="c2">2</span>
-          <span class="step-lbl">Datos</span>
-        </button>
-      </li>
-      <li class="nav-item" role="presentation">
-        <button class="nav-link" id="tab3" data-bs-toggle="tab" data-bs-target="#p3" type="button" role="tab" aria-selected="false" aria-controls="p3">
-          <span class="step-circle" id="c3">3</span>
-          <span class="step-lbl">Confirmar</span>
-        </button>
-      </li>
-    </ul>
 
-    <!-- Paneles -->
-    <div class="tab-content">
+<!-- Navbar -->
+<nav class="navbar navbar-dark fixed-top px-4">
+  <a class="navbar-brand" href="#">
+    <span>CHICHA <span class="accent">BARBER</span></span>
+  </a>
+  <a href="#" class="nav-reserve">RESERVA EN LÍNEA</a>
+</nav>
 
-      <!-- PASO 1 · Calendario -->
-      <div class="tab-pane fade show active" id="p1" role="tabpanel"> 
-        <h2 class="step-title">Reserva tu Cita</h2>
+<!-- Contenedor principal centrado -->
+<div class="position-relative d-flex align-items-center justify-content-center"
+      style="min-height:100vh; padding: 80px 16px 40px;">
+  <div class="booking-card p-4 p-md-5">
 
-        <div class="sec-label">📅 Elige el día</div>
-        <div class="day-grid" id="dayGrid"></div>
+    <!-- ── STEPPER ── -->
+    <div class="stepper mb-5" id="stepper">
+      <div class="step-item active" id="step-indicator-1">
+        <div class="step-circle" id="circle-1">1</div>
+        <div class="step-label">FECHA</div>
+      </div>
+      <div class="step-line"></div>
+      <div class="step-item" id="step-indicator-2">
+        <div class="step-circle" id="circle-2">2</div>
+        <div class="step-label">DATOS</div>
+      </div>
+      <div class="step-line"></div>
+      <div class="step-item" id="step-indicator-3">
+        <div class="step-circle" id="circle-3">3</div>
+        <div class="step-label">CONFIRMAR</div>
+      </div>
+    </div>
 
-        <div class="sec-label">🕐 Horario disponible</div>
-        <div id="slotsBox">
-          <div class="no-slots">Selecciona un día para ver los horarios</div>
+    <!-- ══════════════════════════ PASO 1 – FECHA ══════════════════════════ -->
+    <div id="panel-1" class="step-panel">
+      <h2 class="text-white text-center fw-bold mb-5"
+          style="font-family:'Bebas Neue',sans-serif;font-size:2.5rem;letter-spacing:2px;">
+        Reserva tu Cita
+      </h2>
+
+      <!-- Selector de día -->
+      <div class="mb-4">
+        <div class="section-label mb-3">
+          <i class="bi bi-calendar-event me-2"></i>ELIGE EL DÍA
         </div>
-
-        <div class="wiz-nav">
-          <button class="btn-next" id="btnTo2" disabled>Siguiente →</button>
+        <div class="row g-3" id="day-grid">
+          <!-- Días generados por JS -->
         </div>
       </div>
 
-      <!-- PASO 2 · Formulario -->
-      <div class="tab-pane fade" id="p2" role="tabpanel">
-        <h2 class="step-title">Tus Datos</h2>
-        <p class="step-sub">Información de contacto</p>
-
-        <div class="form-row-2">
-          <div class="fgroup">
-            <label for="fN">Nombre</label>
-            <input class="finput" id="fN" type="text" placeholder="Ej. Juan"/>
-          </div>
-          <div class="fgroup">
-            <label for="fA">Apellido</label>
-            <input class="finput" id="fA" type="text" placeholder="Ej. Pérez"/>
-          </div>
+      <!-- Selector de hora -->
+      <div class="mb-4">
+        <div class="section-label mb-3">
+          <i class="bi bi-clock me-2"></i>HORARIO DISPONIBLE
         </div>
-
-        <div class="fgroup">
-          <label for="fE">Correo Electrónico</label>
-          <input class="finput" id="fE" type="email" placeholder="nombre@ejemplo.com"/>
+        <div id="time-placeholder" class="text-center py-3"
+              style="color:#555; font-size:.85rem;">
+          Selecciona un día para ver los horarios
         </div>
-
-        <div class="fgroup">
-          <label for="fT">Número de Celular</label>
-          <input class="finput" id="fT" type="tel" placeholder="+57 300 000 0000"/>
-        </div>
-
-        <div class="fgroup mb-custom">
-          <label>Método de Pago</label>
-          <div class="pay-options">
-            <label class="pay-opt">
-              <input type="radio" name="pago" value="Pago Electrónico" checked/>
-              <div>
-                <div class="pay-lbl">Pago Electrónico</div>
-                <div class="pay-desc">Nequi, Daviplata, PSE</div>
-              </div>
-            </label>
-            <label class="pay-opt">
-              <input type="radio" name="pago" value="Pago en Persona"/>
-              <div>
-                <div class="pay-lbl">Pago en Persona</div>
-                <div class="pay-desc">Efectivo o tarjeta en el local</div>
-              </div>
-            </label>
-          </div>
-        </div>
-
-        <div class="wiz-nav">
-          <button class="btn-back" id="bk1">← Volver</button>
-          <button class="btn-next" id="btnTo3" disabled>Revisar cita →</button>
+        <div class="row g-2 d-none" id="time-grid">
+          <!-- Slots generados por JS -->
         </div>
       </div>
 
-      <!-- PASO 3 · Confirmación -->
-      <div class="tab-pane fade" id="p3" role="tabpanel">
-        <div class="confirm-icon">✂️</div>
-        <h2 class="step-title">Confirma tu Cita</h2>
-        <p class="step-sub">Revisa los detalles antes de confirmar</p>
+      <button class="btn btn-cyan w-100" id="btn-step1">SIGUIENTE →</button>
+    </div>
 
-        <div class="confirm-grid">
-          <div class="crow"><span class="k">Día</span>    <span class="v hi" id="rDia">—</span></div>
-          <div class="crow"><span class="k">Hora</span>   <span class="v hi" id="rHora">—</span></div>
-          <div class="crow"><span class="k">Nombre</span> <span class="v"    id="rNombre">—</span></div>
-          <div class="crow"><span class="k">Correo</span> <span class="v"    id="rEmail">—</span></div>
-          <div class="crow"><span class="k">Celular</span><span class="v"    id="rTel">—</span></div>
-          <div class="crow"><span class="k">Pago</span>   <span class="v"    id="rPago">—</span></div>
+    <!-- ══════════════════════════ PASO 2 – DATOS ══════════════════════════ -->
+    <div id="panel-2" class="step-panel d-none">
+      <h2 class="text-white fw-bold mb-1"
+          style="font-family:'Bebas Neue',sans-serif;font-size:2.5rem;letter-spacing:2px;">
+        Tus Datos
+      </h2>
+      <p class="mb-4" style="color:#888; font-size:.85rem;">Información de contacto</p>
+
+      <div class="row g-3 mb-3">
+        <div class="col-6">
+          <label class="form-label">Nombre</label>
+          <input id="inp-nombre" type="text" class="form-control form-control-dark"
+                  placeholder="Pepito"/>
         </div>
-
-        <div class="wiz-nav">
-          <button class="btn-back" id="bk2">← Editar</button>
-          <button class="btn-next" id="btnOk">✓ Reservar Cita</button>
+        <div class="col-6">
+          <label class="form-label">Apellido</label>
+          <input id="inp-apellido" type="text" class="form-control form-control-dark"
+                  placeholder="Perez"/>
         </div>
       </div>
 
-    </div><!-- /tab-content -->
-  </div><!-- /wizard-card -->
-  </div><!-- /page -->
+      <div class="mb-3">
+        <label class="form-label">Correo Electrónico</label>
+        <input id="inp-email" type="email" class="form-control form-control-dark"
+                placeholder="correo@ejemplo.com"/>
+      </div>
+
+      <div class="mb-4">
+        <label class="form-label">Número de Celular</label>
+        <input id="inp-tel" type="tel" class="form-control form-control-dark"
+                placeholder="3001234567"/>
+      </div>
+
+      <div class="mb-4">
+        <label class="form-label d-block mb-2">Método de Pago</label>
+        <div class="vstack gap-2">
+          <div class="payment-option d-flex align-items-start"
+                data-pay="electronico" onclick="selectPayment(this)">
+            <span class="radio-dot"></span>
+            <div>
+              <div class="pay-title">Pago Electrónico</div>
+              <div class="pay-sub">Nequi, Daviplata, PSE</div>
+            </div>
+          </div>
+          <div class="payment-option selected d-flex align-items-start"
+                data-pay="persona" onclick="selectPayment(this)">
+            <span class="radio-dot"></span>
+            <div>
+              <div class="pay-title">Pago en Persona</div>
+              <div class="pay-sub">Efectivo o tarjeta en el local</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex gap-3">
+        <button class="btn btn-back" onclick="goStep(1)">← Volver</button>
+        <button class="btn btn-cyan flex-fill" id="btn-step2">REVISAR CITA →</button>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════ PASO 3 – CONFIRMAR ══════════════════════ -->
+    <div id="panel-3" class="step-panel d-none">
+      <div class="text-center mb-4">
+        <div class="success-icon mb-2">✂️</div>
+        <h2 class="text-white fw-bold mb-1"
+            style="font-family:'Bebas Neue',sans-serif;font-size:2.5rem;letter-spacing:2px;">
+          Confirma tu Cita
+        </h2>
+        <p style="color:#888; font-size:.85rem;">Revisa los detalles antes de confirmar</p>
+      </div>
+
+      <div class="mb-4 px-2">
+        <table class="confirm-table w-100">
+          <tbody>
+            <tr>
+              <td class="label">DÍA</td>
+              <td class="value accent text-end" id="confirm-dia">–</td>
+            </tr>
+            <tr>
+              <td class="label">HORA</td>
+              <td class="value accent text-end" id="confirm-hora">–</td>
+            </tr>
+            <tr>
+              <td class="label">NOMBRE</td>
+              <td class="value text-end" id="confirm-nombre">–</td>
+            </tr>
+            <tr>
+              <td class="label">CORREO</td>
+              <td class="value text-end" id="confirm-correo">–</td>
+            </tr>
+            <tr>
+              <td class="label">CELULAR</td>
+              <td class="value text-end" id="confirm-cel">–</td>
+            </tr>
+            <tr>
+              <td class="label">PAGO</td>
+              <td class="value text-end" id="confirm-pago">–</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="d-flex gap-3">
+        <button class="btn btn-back" onclick="goStep(2)">← Editar</button>
+        <button class="btn btn-cyan flex-fill" onclick="reservar()">✓ RESERVAR CITA</button>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════ PANTALLA ÉXITO ══════════════════════════ -->
+    <div id="panel-success" class="step-panel d-none text-center py-4">
+      <div style="font-size:4rem;">🎉</div>
+      <h2 class="success-title mt-3">¡CITA CONFIRMADA!</h2>
+      <p class="mt-2 mb-4" id="cancel-msg" style="color:#aaa;">
+        Te esperamos en Chicha Barber.<br>
+        Recibirás un recordatorio al correo registrado.
+      </p>
+      <button class="btn btn-cyan px-5" onclick="restart()">HACER OTRA RESERVA</button>
+    </div>
+
+  </div><!-- /booking-card -->
+</div>
+
+<!-- Bootstrap 5 JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
   <!-- Toast de confirmación -->
   <div class="toast-wrap">

@@ -154,15 +154,17 @@ justify-content:space-between;
         height: 300px; 
         object-fit: cover; 
     }
-/* Estilos para la sección de reservas */
-/* ══════════════════════════════════════
-   CHICHA BARBER — Wizard Styles
-   Requiere: Bootstrap 5.3.2
-   Fuentes:  Bebas Neue, DM Sans (Google Fonts)
-══════════════════════════════════════ */
 
-/* ── Variables ── */
+/* ---------- Estilos de RESERVAS ---------- */
 :root {
+  --cyan: #00d4f0;
+  --cyan-dim: #0aa8bf;
+  --bg-dark: #0d0f13;
+  --card-bg: rgba(20,24,32,0.97);
+  --card-border: rgba(255,255,255,0.07);
+  --surface: rgba(255,255,255,0.05);
+  --surface-hover: rgba(0,212,240,0.12);
+  --text-muted-custom: #6b7280;
   --bg:           #0e0f11;
   --card:         rgba(18, 20, 23, 0.93);
   --border:       rgba(255, 255, 255, 0.07);
@@ -183,49 +185,161 @@ justify-content:space-between;
     transition: background-color 0.3s ease; /* Para que el cambio al pasar el mouse sea suave */
 }
 
-.btn-registrar:hover {
-    background-color: #00b4d8; /* Un azul un poco más oscuro al pasar el mouse */
-    color: #000000;
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg-dark);
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
-.card {
-    animation: fadeIn 0.6s ease-out;
+/* ---------- background photo ---------- */
+.bg-photo {
+  position: fixed; inset: 0; z-index: 0;
+  background: url('../img/Fondo.png') center/cover no-repeat;
+  filter: brightness(0.25) saturate(0.6);
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-/* login*/
-.login-card {
-    
-    background: rgba(0, 0, 0, 0.5); 
-    backdrop-filter: blur(10px); 
-    -webkit-backdrop-filter: blur(10px); 
-    
-    border: 1px solid rgba(255, 255, 255, 0.1); 
-    border-radius: 15px;
-    
-    width: 100%;
-    max-width: 450px; 
-    min-height: 400px;
+/* ---------- navbar ---------- */
+.navbar-brand span { font-family: 'Bebas Neue', sans-serif; letter-spacing: 4px; font-size: 1.5rem; }
+.navbar-brand span.accent { color: var(--cyan); }
+.navbar { background: rgba(13,15,19,0.85) !important; backdrop-filter: blur(12px); border-bottom: 1px solid var(--card-border); }
+.nav-reserve { color: var(--cyan) !important; font-size: .75rem; letter-spacing: 3px; font-weight: 500; }
+.navbar{
+    margin-top: 0px; /* Ajusta este valor a la altura de tu barra principal */
+    position: relative; 
+    z-index: 99; /* Un poco menos que la principal para que no se solapen */
 }
 
-
-
-
-.custom-input {
-    background-color: rgba(255, 255, 255, 0.08) !important;
-    border: none !important;
-    border-radius: 5px !important;
-    padding: 12px 20px !important;
-    color: #333 !important;
-    font-size: 1.1rem !important;
+/* ---------- booking card ---------- */
+.booking-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 20px;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 30px 80px rgba(0,0,0,.7);
+  max-width: 780px;
+  width: 100%;
 }
 
-.custom-input::placeholder {
-    color: #888;
+/* ---------- stepper ---------- */
+.stepper { position: relative; display: flex; align-items: center; justify-content: center; gap: 0; }
+.step-item { display: flex; flex-direction: column; align-items: center; gap: 6px; position: relative; z-index: 1; }
+.step-circle {
+  width: 40px; height: 40px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: .85rem; border: 2px solid var(--text-muted-custom);
+  color: var(--text-muted-custom); background: transparent;
+  transition: all .3s;
 }
+.step-item.active .step-circle { border-color: var(--cyan); color: var(--cyan); }
+.step-item.done .step-circle  { border-color: var(--cyan); background: var(--cyan); color: #000; }
+.step-label { font-size: .65rem; letter-spacing: 2px; color: var(--text-muted-custom); }
+.step-item.active .step-label,
+.step-item.done .step-label { color: var(--cyan); }
+.step-line { flex: 1; height: 1px; background: var(--card-border); max-width: 120px; }
+
+/* ---------- day cards ---------- */
+.day-card {
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 18px 12px;
+  cursor: pointer;
+  transition: all .2s;
+  text-align: center;
+  background: var(--surface);
+  user-select: none;
+}
+.day-card:hover:not(.disabled) { border-color: var(--cyan); background: var(--surface-hover); }
+.day-card.selected { border-color: var(--cyan); background: var(--surface-hover); }
+.day-card .day-name { font-size: .65rem; letter-spacing: 2px; color: var(--text-muted-custom); }
+.day-card.selected .day-name { color: var(--cyan); }
+.day-card .day-number { font-family: 'Bebas Neue', sans-serif; font-size: 2.8rem; line-height: 1; color: #fff; }
+.day-card.selected .day-number { color: var(--cyan); }
+.day-card .day-month { font-size: .75rem; color: #aaa; }
+.day-card.disabled { opacity: .4; cursor: not-allowed; }
+.day-card .badge-closed {
+  font-size: .6rem; letter-spacing: 1px; background: rgba(255,255,255,0.08);
+  color: #888; border-radius: 4px; padding: 2px 6px; margin-top: 4px; display: inline-block;
+}
+
+/* ---------- time slots ---------- */
+.time-slot {
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  padding: 12px 6px;
+  cursor: pointer;
+  text-align: center;
+  background: var(--surface);
+  font-size: .9rem;
+  font-weight: 500;
+  color: #ddd;
+  transition: all .2s;
+  position: relative;
+  user-select: none;
+}
+.time-slot::after { content: '•'; display: block; color: var(--cyan); font-size: .5rem; margin-top: 2px; }
+.time-slot:hover:not(.unavailable) { border-color: var(--cyan); background: var(--surface-hover); }
+.time-slot.selected { background: var(--cyan); border-color: var(--cyan); color: #000; font-weight: 700; }
+.time-slot.selected::after { color: #000; }
+.time-slot.unavailable { opacity: .35; cursor: not-allowed; text-decoration: line-through; }
+
+/* ---------- section label ---------- */
+.section-label { font-size: .7rem; letter-spacing: 2.5px; color: var(--cyan); font-weight: 600; }
+
+/* ---------- inputs ---------- */
+.form-control-dark {
+  background: var(--surface) !important;
+  border: 1px solid var(--card-border) !important;
+  color: #fff !important;
+  border-radius: 10px;
+}
+.form-control-dark:focus {
+  border-color: var(--cyan) !important;
+  box-shadow: 0 0 0 3px rgba(0,212,240,.15) !important;
+}
+.form-control-dark::placeholder { color: #555; }
+.form-label { font-size: .8rem; color: #aaa; margin-bottom: 6px; }
+
+/* ---------- payment options ---------- */
+.payment-option {
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 14px 16px;
+  cursor: pointer;
+  transition: all .2s;
+  background: var(--surface);
+}
+.payment-option:hover,
+.payment-option.selected { border-color: var(--cyan); background: var(--surface-hover); }
+.payment-option .pay-title { font-size: .9rem; font-weight: 500; color: #fff; }
+.payment-option .pay-sub   { font-size: .75rem; color: #888; }
+.payment-option .radio-dot {
+  width: 18px; height: 18px; border-radius: 50%;
+  border: 2px solid #555; display: inline-block; margin-right: 12px; flex-shrink: 0;
+  transition: all .2s; position: relative; top: 2px;
+}
+.payment-option.selected .radio-dot {
+  border-color: var(--cyan);
+  background: var(--cyan);
+  box-shadow: 0 0 0 3px rgba(0,212,240,.2);
+}
+
+/* ---------- confirmation table ---------- */
+.confirm-table tr { border-bottom: 1px solid var(--card-border); }
+.confirm-table tr:last-child { border-bottom: none; }
+.confirm-table td { padding: 14px 0; }
+.confirm-table .label { font-size: .65rem; letter-spacing: 2px; color: #888; }
+.confirm-table .value { font-size: .9rem; color: #fff; }
+.confirm-table .value.accent { color: var(--cyan); font-weight: 600; }
+
+/* ---------- buttons ---------- */
+.btn-cyan {
+  background: var(--cyan); border: none; color: #000;
+  font-weight: 700; font-size: .8rem; letter-spacing: 2px;
+  border-radius: 10px; padding: 14px;
+  transition: all .2s;}
 .custom-btn {
     background-color: #4bc0d9 !important;
     border: none !important;
@@ -237,27 +351,24 @@ justify-content:space-between;
     transition: background-color 0.2s, transform 0.15s, box-shadow 0.2s !important;
     box-shadow: 0 4px 18px rgba(75, 192, 217, 0.25) !important;
 }
-
-.custom-btn:hover {
-    background-color: #35a8c0 !important;
-    transform: translateY(-1px) !important;
-    box-shadow: 0 6px 22px rgba(75, 192, 217, 0.35) !important;
-    color: #111 !important;
+.btn-cyan:hover { background: #fff; color: #000; }
+.btn-back {
+  background: var(--surface); border: 1px solid var(--card-border);
+  color: #aaa; font-size: .8rem; letter-spacing: 1px;
+  border-radius: 10px; padding: 14px 20px;
+  transition: all .2s;
 }
+.btn-back:hover { border-color: #aaa; color: #fff; }
 
+/* ---------- success screen ---------- */
+.success-icon { font-size: 4rem; color: var(--cyan); }
+.success-title { font-family: 'Bebas Neue', sans-serif; font-size: 2.8rem; letter-spacing: 3px; color: #fff; }
 
-/* contraseña*/
-
-
-/* Reutilizamos los estilos del login para mantener la estética de la imagen */
-.login-card {
-    background: rgba(0, 0, 0, 0.5); 
-    backdrop-filter: blur(10px); 
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1); 
-    border-radius: 15px;
-    width: 90%;
-    max-width: 550px;
+/* ---------- fade transition ---------- */
+.step-panel { animation: fadeUp .3s ease both; }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 .custom-input {

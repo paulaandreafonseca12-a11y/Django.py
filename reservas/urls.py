@@ -21,6 +21,6 @@ from django.urls import include
 from . import views
 
 urlpatterns = [
-    path('', views.reservas_view, name='reservas'),
-    
+    path('reservas/', views.reservas_view, name='reservas'),
+    path('calificacion/', views.calificacion_view, name='calificacion')
 ]

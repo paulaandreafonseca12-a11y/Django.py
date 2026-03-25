@@ -11,6 +11,12 @@ def servicios_view(request):
     }
     return render(request, 'servicios.html', context)
 
+def calificacion_views(request):
+    context = {
+        'titulo': 'Calificación de Servicios',
+    }
+    return render(request, 'calificacion.html', context)
+
 def crear_servicios(request):
     if request.method == 'POST':
         form = serviciosForm(request.POST)

@@ -21,7 +21,6 @@ from django.urls import include
 from . import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
     path('', views.reservas_view, name='reservas'),
     
 ]

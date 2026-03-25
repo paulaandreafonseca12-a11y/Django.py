@@ -1,5 +1,5 @@
 from multiprocessing import context
-from django.contrib import messages 
+from django.contrib import messages  # type: ignore
 
 
 from django.shortcuts import render,redirect, get_object_or_404 # type: ignore
@@ -13,6 +13,7 @@ def inicio(request):
         'nombre': nombre
     }
     return render(request, 'index.html', context)
+
 
 
 

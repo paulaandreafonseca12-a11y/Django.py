@@ -31,8 +31,6 @@ INSTALLED_APPS = [
     'crispy_bootstrap5', # pip install crispy-bootstrap5
     'servicios',
     'reservas',
-
-    
     'productos',  
 ]
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"

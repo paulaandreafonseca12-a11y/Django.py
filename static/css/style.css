@@ -152,6 +152,7 @@ justify-content:space-between;
   --input-border: rgba(255, 255, 255, 0.1);
   --slot-bg:      rgba(41, 197, 246, 0.07);
   --slot-hover:   rgba(41, 197, 246, 0.16);
+  }
 /* estilo de registro */
 .btn-registrar {
     background-color: #48cae4; /* El color azul cian */

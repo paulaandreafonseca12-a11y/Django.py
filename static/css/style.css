@@ -2,7 +2,7 @@
 .back{
 background-image:
 linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
-url( "../img/Fondo.png" );
+url( '../img/Fondo.png' );
 background-size: cover;
 background-position:center;
 background-attachment:fixed;
@@ -11,7 +11,7 @@ background-attachment:fixed;
 background:#030301 !important;
 }
 
-.hero-section{
+.hero-section{ 
 min-height:90vh;
 }
 .info-card{
@@ -143,6 +143,24 @@ justify-content:space-between;
   --surface: rgba(255,255,255,0.05);
   --surface-hover: rgba(0,212,240,0.12);
   --text-muted-custom: #6b7280;
+  --bg:           #0e0f11;
+  --card:         rgba(18, 20, 23, 0.93);
+  --border:       rgba(255, 255, 255, 0.07);
+  --accent:       #29c5f6;
+  --glow:         rgba(41, 197, 246, 0.22);
+  --text:         #eef0f3;
+  --muted:        #6b7280;
+  --input-bg:     rgba(255, 255, 255, 0.05);
+  --input-border: rgba(255, 255, 255, 0.1);
+  --slot-bg:      rgba(41, 197, 246, 0.07);
+  --slot-hover:   rgba(41, 197, 246, 0.16);
+  }
+/* estilo de registro */
+.btn-registrar {
+    background-color: #48cae4; /* El color azul cian */
+    color: #000000;            /* Texto negro para mejor contraste */
+    border: none;              /* Quitar bordes si los tiene */
+    transition: background-color 0.3s ease; /* Para que el cambio al pasar el mouse sea suave */
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -299,7 +317,17 @@ body {
   background: var(--cyan); border: none; color: #000;
   font-weight: 700; font-size: .8rem; letter-spacing: 2px;
   border-radius: 10px; padding: 14px;
-  transition: all .2s;
+  transition: all .2s;}
+.custom-btn {
+    background-color: #4bc0d9 !important;
+    border: none !important;
+    color: #111 !important;
+    padding: 12px !important;
+    border-radius: 5px !important;
+    letter-spacing: 1px !important;
+    font-size: 1rem !important;
+    transition: background-color 0.2s, transform 0.15s, box-shadow 0.2s !important;
+    box-shadow: 0 4px 18px rgba(75, 192, 217, 0.25) !important;
 }
 .btn-cyan:hover { background: #fff; color: #000; }
 .btn-back {
@@ -320,3 +348,19 @@ body {
   from { opacity: 0; transform: translateY(16px); }
   to   { opacity: 1; transform: translateY(0); }
 }
+
+.custom-input {
+    background-color: rgba(240, 240, 240, 0.8) !important;
+    border: none;
+    padding: 12px;
+}
+
+.custom-btn {
+    background-color: #4bc0d9;
+    color: #333;
+    transition: background 0.3s ease;
+}
+
+.custom-btn:hover {
+    background-color: #ffffff; /* Brilla un poco más al pasar el mouse */
+} 

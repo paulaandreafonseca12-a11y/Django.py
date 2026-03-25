@@ -16,7 +16,7 @@ class Producto(models.Model):
     descripcion = models.TextField()
     precio_venta = models.DecimalField(max_digits=10, decimal_places=2)
     precio_compra = models.DecimalField(max_digits=10, decimal_places=2)
-
+        
     stock = models.ForeignKey(
         Stock,
         on_delete=models.CASCADE,
@@ -29,7 +29,12 @@ class Producto(models.Model):
 
 class Compra(models.Model):
     codigo_compra = models.AutoField(primary_key=True)
-
+    nombre_cliente = models.CharField(max_length=100)
+    correo = models.EmailField()
+    telefono = models.CharField(max_length=20)
+    direccion = models.CharField(max_length=255)
+    metodo_pago = models.CharField(max_length=20)
+    total = models.DecimalField(max_digits=10, decimal_places=2)    
     def __str__(self):
         return f"{self.nombre_cliente} - Compra {self.codigo_compra}"
 

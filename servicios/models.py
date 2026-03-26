@@ -9,6 +9,7 @@ class Servicios(models.Model):
     nombre = models.CharField(max_length=150, verbose_name='nombre')
     precio = models.CharField(max_length=10, verbose_name='Precio')
     duracion = models.CharField(max_length=20, verbose_name='Duración')
+    descripcion = models.TextField(verbose_name='Descripción')
     cita_servicios = models.ForeignKey('servicios', on_delete=models.SET_NULL, null=True, blank=True, verbose_name='cita_servicios')
 
     class Meta:

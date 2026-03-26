@@ -6,6 +6,23 @@
     <div class="p-5 mb-4 bg-body-tertiary rounded-3 opacity-75">
         <h2 style="text-align: center; color: #d4af37; margin-bottom: 40px;">Ofertas de la Semana</h2>
 
+     </div>
+        {% comment %} Tarjetas {% endcomment %}
+        <section class="layout d-flex flex-wrap justify-content-around">
+
+             {% for servicio in servicios %}
+            <div class="card mb-4" style="width: 18rem; ">
+                <img src="{% static 'img/corte/corte_1.jpg' %}" class="img-thumbnail" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">{{ servicio.nombre }}</h5>
+                    <p class="card-text">{{ servicio.descripcion }}</p>
+                    <p> Duracion: {{ servicio.duracion }} </p>
+                    <p class="card-text">Precio: ${{ servicio.precio }}</p>
+                    <a class="btn btn-primary" href="#" role="button">Seleccionar</a>
+                </div>
+            </div>
+            {% endfor %}
+
         <section class="layout" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; justify-items: center;">
 
             <div class="card" style="width: 18rem;">

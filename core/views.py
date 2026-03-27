@@ -4,8 +4,9 @@ from django.contrib import messages  # type: ignore
 
 from django.shortcuts import render,redirect, get_object_or_404 # type: ignore
 
-import servicios
-from servicios.forms import serviciosEditarForm, serviciosForm
+
+
+from servicios.forms import ServiciosEditarForm, ServiciosForm
 
 def inicio(request):
     nombre = "Santiago"

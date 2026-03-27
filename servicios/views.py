@@ -2,7 +2,10 @@ from django.shortcuts import render # type: ignore
 from django.shortcuts import render, redirect, get_object_or_404 # type: ignore
 from django.contrib import messages # type: ignore
 from .models import *
-from .forms import serviciosForm, serviciosEditarForm
+from .forms import PromocionEditarForm, PromocionForm, ServiciosForm, ServiciosEditarForm
+from.models import Servicios,Promocion
+
+         
 
 def servicios_view(request):
     servicios = Servicios.objects.all()
@@ -74,10 +77,52 @@ def editar_servicios(request, pk):
 
 
 # Create your views here.
+def promocion(request):
+    return render(request, 'promocion.html')
 
-
-def promocion_views(request):
-    context = {
-    'titulo' : 'Promociones'
+def crear_promocion(request):
+    if request.method == 'POST':
+        form = PromocionForm(request.POST)
+        if form.is_valid():
+            promocion = form.save(commit=False)
+            
+            # 1. Asignar el documento como nombre de usuario
+            promocion.username = promocion.documento
+            
+            
+            
+            # 4. Ahora sí guardamos en la base de datos
+            promocion.save()
+        else:
+            messages.error(request, "Error al crear la promoción. Revisa los campos marcados en rojo.")
+    else:
+        form = PromocionForm()
+    
+    context={
+        'form': form,
+        'titulo': 'Crear nueva promoción',
     }
-    return render(request, 'promocion.html', context)
+    return render(request, 'servicios/agregar_promocion.html', context)
+
+
+def editar_promocion(request, pk):
+    promocion = get_object_or_404(promocion, pk=pk)
+
+    if request.method == 'POST':
+        form = PromocionEditarForm(request.POST, instance=promocion)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f"Datos de {promocion.nombre} actualizados correctamente.")
+            return redirect('servicios:inicio_servicios')
+        else:
+            messages.error(request, "Error al actualizar. Revisa los campos marcados en rojo.")
+    else:
+        form = PromocionEditarForm(instance=promocion)
+
+    context = {
+        'form': form,
+        'titulo': f'Editar a {promocion.nombre}',
+    }
+    return render(request, 'servicios/agregar_promocion.html', context)
+
+    

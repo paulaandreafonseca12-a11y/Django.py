@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base-clientes.html" %}
 {% load static %}
 
 {% block content %}
@@ -8,81 +8,24 @@
 
         <section class="layout" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; justify-items: center;">
 
-     </div>
+    
+        </div>
         {% comment %} Tarjetas {% endcomment %}
         <section class="layout d-flex flex-wrap justify-content-around">
 
              {% for servicio in servicios %}
             <div class="card mb-4" style="width: 18rem; ">
-                <img src="{% static 'img/corte/corte_1.jpg' %}" class="img-thumbnail" alt="...">
+                <img src="" class="img-thumbnail" alt="...">
                 <div class="card-body">
-                    <h5 class="card-title">{{ servicio.nombre }}</h5>
-                    <p class="card-text">{{ servicio.descripcion }}</p>
-                    <p> Duracion: {{ servicio.duracion }} </p>
-                    <p class="card-text">Precio: ${{ servicio.precio }}</p>
+                    <h5 class="card-title">{{ promocion.nombre }}</h5>
+                    <p class="card-text">{{ promocion.descripcion }}</p>
+                    <p> Duracion: {{ promocion.duracion }} </p>
+                    <p class="card-text">Precio: ${{ promocion.precio }}</p>
                     <a class="btn btn-primary" href="#" role="button">Seleccionar</a>
                 </div>
             </div>
             {% endfor %}
 
-    <div class="promo-container">
-        <div class="promo-card">
-            <div class="promo-badge">20% OFF</div>
-            <div class="promo-content">
-                <h3 class="promo-title">Combo VIP</h3>
-                <p>Corte de cabello + Barba completa </p>
-                <div class="promo-price">
-                    <span class="old-price">$25.00</span>
-                    <span class="new-price">$20.00</span>
-                </div>
             </div>
-
-            <div class="card" style="width: 18rem;">
-                <img src="..." class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Promo Fin de Semana</h5>
-                    <p class="card-text">Disfruta de un corte de cabello y un afeitado con un 20% de descuento en todos nuestros servicios.</p>
-                    <a class="btn btn-primary" href="#" role="button">Seleccionar</a>
-                </div>
-            </div>
-
-            <div class="card" style="width: 18rem;">
-                <img src="..." class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Promo mensual</h5>
-                    <p class="card-text">Terapia Capilar Anticaída: Un masaje capilar profundo utilizando un tónico especializado y alta frecuencia.</p>
-                    <a class="btn btn-primary" href="#" role="button">Seleccionar</a>
-                </div>
-            </div>
-
-            <div class="card" style="width: 18rem;">
-                <img src="..." class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">"Look Impecable 24/7"</h5>
-                    <p class="card-text">Por tu corte, llévate la cera con un 20% de descuento para que te peines igual en casa.</p>
-                    <a class="btn btn-primary" href="#" role="button">Seleccionar</a>
-                </div>
-            </div>
-
-            <div class="card" style="width: 18rem;">
-                <img src="..." class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">"Barba de Acero"</h5>
-                    <p class="card-text">Realízate el servicio de barba y lleva el aceite protector por solo un precio especial de combo.</p>
-                    <a class="btn btn-primary" href="#" role="button">Seleccionar</a>
-                </div>
-            </div>
-
-            <div class="card" style="width: 18rem;">
-                <img src="..." class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">"Caballero Moderno"</h5>
-                    <p class="card-text">El kit completo tiene un 10% de ahorro comparado con los precios individuales. Incluye bolsa de regalo.</p>
-                    <a class="btn btn-primary" href="#" role="button">Seleccionar</a>
-                </div>
-            </div>
-
-        </section>
-    </div>
-</main>
-{% endblock content %}
+            </main>
+{% endblock %}
